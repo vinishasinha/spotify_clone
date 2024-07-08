@@ -1,58 +1,55 @@
-import React from 'react';
-import { assets } from '../assets/assets';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
+import {assets} from '../assets/assets'
+import { PlayerContext } from '../context/PlayerContext';
 
-const Sidebar = () => {
-    const navigate=useNavigate();
+const Player = () => {
+    const {track,seekBar,seekBg,playStatus,play,pause,time,previous,next,seekSong}=useContext(PlayerContext);
   return (
-    
-    <div className='w-[25%] h-full p-2 flex-col gap-2 text-white hidden lg:flex'>
-        <div className='bg-[#121212] h-[20%] rounded flex flex-col justify-around'>
-        <div className='flex item-center gap-3 pl-8 cursor-pointer'>
-                <img className="w-6" src={assets.spotify_logo} alt="" />
-                <p className='font-bold'>Spotify</p>
+    <div className='h-[10%] bg-black flex justify-between items-center text-white px-4'>
+        <div className='hidden lg:flex items-center gap-4 '>
+            <img className='w-12' src={track.image} alt="" />
+            <div>
+                <p>{track.name}</p>
+                <p>{track.desc.slice(0,12)}</p>
             </div>
-            <div onClick={()=>navigate('/')} className='flex item-center gap-3 pl-8 cursor-pointer mt-3'>
-                <img className="w-6" src={assets.home_icon} alt="" />
-                <p className='font-bold'>Home</p>
-            </div>
-            <div className='flex item-center gap-3 pl-8 cursor-pointer mt-3'>
-                <img className="w-6" src={assets.search_icon} alt="" />
-                <p className='font-bold'>Search</p>
-            </div>
-        </div> 
-        <div className='bg-[#121212] h-[85%] rounded'>
-            <div className='p-4 flex items-center justify-between'>
-                <div className='flex items-center gap-3'>
-                    <img className="w-8" src={assets.stack_icon} alt="" />
-                    <p className='font-semibold'>Your Library</p>
-                </div>
-                <div className='flex item-center gap-3'>
-                    <img className='w-5'src={assets.arrow_icon} alt="" />
-                    <img className='w-5'src={assets.plus_icon} alt="" />
-                </div>
-            </div>
-            <div className='p-4 bg-[#242424] m-2 rounded font-semibold flex flex-col items items-start justify-start gap-1 pl-4'>
-                    <h1>
-                     Create Your First PlayList
-                    </h1>
-                    <p className='font-light'>it's easy we will help you</p>
-                    <button className='px-4 py-1.5 bg-white text=[15px] text-black rounded-full mt-4'>Create Playlist</button>
-
-                </div>
-                <div className='p-4 bg-[#242424] m-2 rounded font-semibold flex flex-col items items-start justify-start gap-1 pl-4 mt-5'>
-                    <h1>
-                     Let's Find Some Podcast to follow
-                    </h1>
-                    <p className='font-light'>we will keep you update on new episode</p>
-                    <button className='px-4 py-1.5 bg-white text=[15px] text-black rounded-full mt-4'>Browse Podcast</button>
-
-                </div>
-
         </div>
-        
+        <div className='flex flex-col items-center gap-1 m-auto'>
+            <div className='flex gap-4'>
+                <img  className='w-4 cursor-pointer' src={assets.shuffle_icon} alt="" />
+                <img onClick={previous} className='w-4 cursor-pointer' src={assets.prev_icon} alt="" />
+                {playStatus ?
+                 <img onClick={pause} className='w-4 cursor-pointer' src={assets.pause_icon} alt="" /> 
+                :
+                <img onClick={play} className='w-4 cursor-pointer' src={assets.play_icon} alt="" />
+                }
+                
+               
+                <img onClick={next} className='w-4 cursor-pointer' src={assets.next_icon} alt="" />
+                <img className='w-4 cursor-pointer' src={assets.loop_icon} alt="" />
+
+            </div>
+            <div className='flex items-center gap-5'>
+                <p>{time.currentTime.minute}:{time.currentTime.second}</p>
+                <div ref={seekBg} onClick={seekSong} className='w-[60vw] max-w-[500px] bg-gray-300 rounded-full cursor-pointer '>
+                    <hr ref={seekBar} className='h-1 border-none w-0 bg-green-800 rounded-full' />
+                </div>
+                <p>{time.totalTime.minute}:{time.totalTime.second}</p>
+            </div>
+        </div>
+        <div className='hidden lg:flex items-center gap-2 opacity-75'>
+            <img className='w-4' src={assets.plays_icon} alt="" />
+            <img className='w-4' src={assets.mic_icon} alt="" />
+            <img className='w-4' src={assets.queue_icon} alt="" />
+            <img className='w-4' src={assets.speaker_icon} alt="" />
+            <img className='w-4' src={assets.volume_icon} alt="" />
+            <div className='w-20 bg-slate-50 h-1 rounded'>
+
+            </div>
+            <img className='w-4' src={assets.mini_player_icon} alt="" />
+            <img className='w-4' src={assets.zoom_icon} alt="" />
+        </div>
     </div>
   )
 }
 
-export default Sidebar
+export default Player
