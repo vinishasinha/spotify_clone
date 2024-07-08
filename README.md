@@ -1,6 +1,7 @@
 # React + Vite
 Download the Zip file .
-Open in vscode.
-Open terminal ,Run the Command Npm run dev
+Open the file in vscode.
+Open terminal ,Run the Command Npm install..
+Then Write the command npm run dev.
 
 
